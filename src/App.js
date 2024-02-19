@@ -3,6 +3,7 @@ import { TodoSearch } from './TodoSearch';
 import { TodoList } from './TodoList';
 import { CreateTodoButton } from './CreateTodoButton';
 import { TodoItem } from './TodoItem';
+import React from 'react';
 
 const defaultTodos = [
 	{ text: 'Find a problem you or someone has', completed: true },
@@ -11,17 +12,27 @@ const defaultTodos = [
 		completed: false,
 	},
 	{ text: 'Gain first 3 customers', completed: false },
+	{ text: 'Napkin business model', completed: false },
 	{ text: 'Launch a million dollar business', completed: false },
 ];
 
 function App() {
+	const [todos, setTodos] = React.useState(defaultTodos);
+	const [searchValue, setSearchValue] = React.useState('');
+
+	const completedTodos = todos.filter((todo) => !!todo.completed).length;
+	const totalTodos = todos.length;
+
 	return (
 		<>
 			<TodoCounter
-				completed={3}
-				total={6}
+				completed={completedTodos}
+				total={totalTodos}
 			/>
-			<TodoSearch />
+			<TodoSearch
+				searchValue={searchValue}
+				setSearchValue={setSearchValue}
+			/>
 
 			<TodoList>
 				{defaultTodos.map((todo) => (
