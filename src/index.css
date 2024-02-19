@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+	font-family: 'Figtree', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}
+
+#root {
+	margin: 0 24px;
+	position: relative;
+	min-height: 100vh;
+}
+.div-header {
+	background-color: #4bc75b;
+}
+.h1-header {
+	background-color: #4bc75b;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 5px;
+}
+.h3-header {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 5px;
+}
+.h4-header {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	background-color: #4bc75b;
+	margin: 5px;
+}
