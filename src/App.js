@@ -5,19 +5,29 @@ import { CreateTodoButton } from './CreateTodoButton';
 import { TodoItem } from './TodoItem';
 import React from 'react';
 
-const defaultTodos = [
-	{ text: 'Find a problem you or someone has', completed: true },
-	{
-		text: 'Come up with an innovative solution to solve a problem',
-		completed: false,
-	},
-	{ text: 'Gain first 3 customers', completed: false },
-	{ text: 'Napkin business model', completed: false },
-	{ text: 'Launch a million dollar business', completed: false },
-];
+// const defaultTodos = [
+// 	{ text: 'Find a problem you or someone has', completed: true },
+// 	{
+// 		text: 'Come up with an innovative solution to solve a problem',
+// 		completed: false,
+// 	},
+// 	{ text: 'Gain first 3 customers', completed: false },
+// 	{ text: 'Napkin business model', completed: false },
+// 	{ text: 'Launch a million dollar business', completed: false },
+// ];
+// localStorage.setItem('MDW_TODOS_V1', JSON.stringify(defaultTodos));
 
 function App() {
-	const [todos, setTodos] = React.useState(defaultTodos);
+	const localStorageTodos = localStorage.getItem('MDW_TODOS_V1');
+	let parsedTodos;
+	if (!localStorageTodos) {
+		localStorage.setItem('MDW_TODOS_V1', JSON.stringify([]));
+		parsedTodos = [];
+	} else {
+		parsedTodos = JSON.parse(localStorageTodos);
+	}
+
+	const [todos, setTodos] = React.useState(parsedTodos);
 	const [searchValue, setSearchValue] = React.useState('');
 
 	const numberOfCompletedTodos = todos.filter(
@@ -30,18 +40,23 @@ function App() {
 		return todoText.includes(searchText);
 	});
 
+	const persistChanges = (newTodos) => {
+		localStorage.setItem('MDW_TODOS_V1', JSON.stringify(newTodos));
+		setTodos(newTodos);
+	};
+
 	const markCompleteTodo = (todoText) => {
 		const newTodos = [...todos];
 		const todoIndex = newTodos.findIndex((todo) => todo.text == todoText);
 		newTodos[todoIndex].completed = true;
-		setTodos(newTodos);
+		persistChanges(newTodos);
 	};
 
 	const deleteTodo = (todoText) => {
 		const newTodos = [...todos];
 		const todoIndex = newTodos.findIndex((todo) => todo.text == todoText);
 		newTodos.splice(todoIndex, 1);
-		setTodos(newTodos);
+		persistChanges(newTodos);
 	};
 
 	return (
